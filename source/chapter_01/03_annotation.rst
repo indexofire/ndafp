@@ -53,6 +53,7 @@
 --------
 
 http://www.ncbi.nlm.nih.gov/genome/annotation_prok/
+http://www.ncbi.nlm.nih.gov/books/NBK174280/
 
 --------------------------------------------------------------------------------
 
@@ -63,4 +64,4 @@ Reference:
 ----------
 
 1.
-2. 
+2.
