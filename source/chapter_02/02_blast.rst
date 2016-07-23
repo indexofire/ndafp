@@ -107,7 +107,7 @@ Local blast例子：获得一条大肠杆菌序列 myseq.fasta，要和 EDL933 �
    ~$ blastall -i myseq.fasta -d AE005174.2.fasta -p blastn
 
 1.2 NCBI_blast+
-^^^^^^^^^^
+^^^^^^^^^^^^^^^
 
 目前 NCBI_blast+ 最新版为 v2.4.0。
 
