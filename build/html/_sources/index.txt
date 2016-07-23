@@ -64,8 +64,8 @@ Fork笔记方法
    :maxdepth: 2
    :glob:
 
-   chapter_01/01_index
-   chapter_02/01_index
+   chapter_01/index
+   chapter_02/index
 
 版本更新
 --------

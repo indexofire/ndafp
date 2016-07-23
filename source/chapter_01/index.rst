@@ -4,5 +4,6 @@
 .. toctree::
    :maxdepth: 1
 
-   02_quality_control
-   03_assembly
+   01_quality_control
+   02_assembly
+   03_annotation
