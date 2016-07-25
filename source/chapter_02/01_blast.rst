@@ -1,10 +1,7 @@
-第1节. 构建 Local Blast 应用
+第1节. 使用本地 Blast 应用
 ============================
 
-blast_ 工具用来进行序列相似性比对。常见的使用是通过访问 http://blast.ncbi.nlm.nih.gov/Blast.cgi，使用基于 Web 及面的 blast_ 工具，调用 NCBI 相应的序列数据库来进行比对。此外在 NCBI 很多工具集里
-
-Local Blast 使用说明
---------------------
+blast_ 工具用来进行序列相似性比对。常见的使用是通过访问 http://blast.ncbi.nlm.nih.gov/Blast.cgi，使用基于 Web 及面的 blast_ 工具，调用 NCBI 相应的序列数据库来进行比对。此外在 NCBI 很多工具集里。
 
 .. note::
     blast_ 工具可以进行序列相似性比对。在 NGS 数据分析中经常会被使用到，特别是一些工具中需要使用 blast 来作序列比对。拿到测序完成的草图后，因为基因组数据较大，连接NCBI网站往往又非常缓慢，所以要做 Blast 比对的话都需要做 Local Blast。这里介绍2个方式来实现：
@@ -12,8 +9,8 @@ Local Blast 使用说明
 1. 用命令行进行 Blast
 2. 快速构建 Blast Web 服务
 
-1. 基于命令行的 Local Blast
-~~~~~~~~~~~~~~~~~~~~~~~~~~~
+1. 使用本地 Blast
+-----------------
 
 **blast** 和 **ncbi_blast+** 这2个程序集容易搞混。NCBI 最早在1989年创建 Basic Local Alignment Search Tool 工具，沿用至2009年无论是命令行工具或是在线程序，都称呼其为blast。2009年 NCBI 鉴于 ``blast`` 的一些不足，重新开发了新的 ncbi_blast+ 命令行工具，新的 ncbi_blast+ 工具在速度上有了提升，在输入输出上也更为灵活。
 
@@ -140,10 +137,23 @@ NGS 测序时为了保证 DNA 质量，往往会对物种进行鉴定，采用 1
 
 http://www.personal.psu.edu/iua1/courses/files/2014/lecture-12.pdf
 
-2. 构建自己的blast web服务
-~~~~~~~~~~~~~~~~~~~~~~~~~~
+--------------------------------------------------------------------------------
 
-2.1 blastkit
+2. Local Blast 使用 nr 数据库
+-----------------------------
+
+2.1 下载 NCBI nr 数据库
+
+.. code-block:: bash
+
+   ~$ nohup update_blastdb.pl nt nr > log &
+   ~$ blastn -query myseq.fa -db nt -outfmt 11 -out result
+
+
+3. 构建自己的 blast web 服务
+----------------------------
+
+3.1 blastkit
 ^^^^^^^^^^^^
 
 blastkit 是一个包含webserver等工具的blast工具集。
@@ -204,9 +214,9 @@ blastkit 是一个包含webserver等工具的blast工具集。
 Reference
 ---------
 
--  `Blastkit <https://github.com/ctb/blastkit.git>`__
--  `Caltech workshop <https://github.com/dib-lab/2013-caltech-workshop/blob/master/blastkit.txt>`__
-
+- `Blastkit <https://github.com/ctb/blastkit.git>`__
+- `Caltech workshop <https://github.com/dib-lab/2013-caltech-workshop/blob/master/blastkit.txt>`__
+_ `Linux系统中NCBI BLAST+本地化教程 <http://blog.shenwei.me/local-blast-installation/>`__
 
 
 .. _blast: http://blast.ncbi.nlm.nih.gov/Blast.cgi
