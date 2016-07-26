@@ -64,6 +64,7 @@ Fork笔记方法
    :maxdepth: 2
    :glob:
 
+   preface/index
    chapter_01/index
    chapter_02/index
 
