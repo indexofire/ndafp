@@ -6,7 +6,7 @@ Linux 入门基础
 
 
 2. Linux 权限概念
-----------------
+-----------------
 
 
 3. Linux 常用的命令
@@ -30,8 +30,7 @@ Linux 入门基础
     # 查看所有 .fastq 后缀的文件，* 代表任何长度的任意字符
     $ ls ~/data/*.fastq
 
-cd: 改变文件夹
-^^^^^^^^^^^^^^
+**cd: 改变文件夹**
 
 .. code-block:: bash
 
@@ -50,32 +49,28 @@ cd: 改变文件夹
     # 返回多级目录并前往一个叫“new directory”的文件夹，这里 '\' 是转义符，将空格符转义
     $ cd ../../../new\ directory
 
-pwd: 显示当前目录
-^^^^^^^^^^^^^^^^^
+**pwd: 显示当前目录**
 
 .. code-block:: bash
 
     # 当不知道当前处于什么路径时，可以用这个命令显示
     $ pwd
 
-mkdir: 建立新文件夹
-^^^^^^^^^^^^^^^^^^^
+**mkdir: 建立新文件夹**
 
 .. code-block:: bash
 
     # 当前路径下新建一个名叫 'new' 的文件夹
     $ mkdir new
 
-rmdir: 删除文件夹
-^^^^^^^^^^^^^^^^^
+**rmdir: 删除文件夹**
 
 .. code-block:: bash
 
     # 删除当前路径的文件夹 'new'
     $ rmdir new
 
-rm: 删除文件
-^^^^^^^^^^^^
+**rm: 删除文件**
 
 .. code-block:: bash
 
@@ -88,72 +83,63 @@ rm: 删除文件
     # 不弹出删除确认提示，删除所有 '.tmp' 文件
     $ rm -f *.tmp
 
-cp: 复制文件
-^^^^^^^^^^^^
+**cp: 复制文件**
 
 .. code-block:: bash
 
     # 复制 'test.txt' 文件到文件夹 '~/abc' 中
     $ cp test.txt ~/abc
 
-mv: 移动文件或文件夹
-^^^^^^^^^^^^^^^^^^^^
+**mv: 移动文件或文件夹**
 
 .. code-block:: bash
 
     # 移动 'test.txt' 文件到文件夹 '~/abc' 中并改名叫 'test1.txt'
     $ mv test.txt ~/abc/test1.txt
 
-which: 查找可执行文件的系统路径
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+**which: 查找可执行文件的系统路径**
 
 .. code-block:: bash
 
     # 打印出系统带的 python 程序的路径
     $ which python
 
-wc: 统计一个文件的行，字符和字节数
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+**wc: 统计一个文件的行，字符和字节数**
 
 .. code-block:: bash
 
     # 输出文件 'text.txt' 的行数，字符数和字节数。
     $ wc text.txt
 
-cat: 输出文件内容
-^^^^^^^^^^^^^^^^^
+**cat: 输出文件内容**
 
 .. code-block:: bash
 
     # 显示文件 'text.txt' 内容
     $ cat text.txt
 
-grep: 截取输入字符的选定 pattern 并输出所在的行
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+**grep: 截取输入字符的选定 pattern 并输出所在的行**
 
 .. code-block:: bash
 
     # 显示文件 'text.txt' 中含有字符 'abc' 的行
     $ cat text.txt | grep 'abc'
 
-head: 输出文件头部内容
-^^^^^^^^^^^^^^^^^^^^^^
+**head: 输出文件头部内容**
 
 .. code-block:: bash
 
     # 输出文件前5行内容
     $ head -5 text.txt
 
-tail: 输出文件尾部内容
-^^^^^^^^^^^^^^^^^^^^^^
+**tail: 输出文件尾部内容**
 
 .. code-block:: bash
 
     # 输出文件的最后5行内容
     $ tail -5 text.txt
 
-ps: 查看系统进程
-^^^^^^^^^^^^^^^^
+**ps: 查看系统进程**
 
 ps会在终端打印系统进程，各列的含义是:
 
@@ -193,8 +179,7 @@ ps会在终端打印系统进程，各列的含义是:
 4. 其他常用命令与工具
 ---------------------
 
-lsb_release 查看发行版信息
-^^^^^^^^^^^^^^^^^^^^^^^^^^
+**lsb_release: 查看发行版信息**
 
 .. code-block:: bash
 
@@ -207,8 +192,7 @@ lsb_release 查看发行版信息
     Codename:	        xenial
 
 
-htop 系统进程查看
-^^^^^^^^^^^^^^^^^
+**htop: 系统进程查看**
 
 .. code-block:: bash
 
@@ -216,6 +200,18 @@ htop 系统进程查看
     $ sudo apt install htop
     # 运行 htop
     $ htop
+
+**dmesg: 查看系统日志**
+
+.. code-block:: bash
+
+   # 显示启动状态开始的核心输出日志
+   $ dmesg | less
+   # 列出某个硬件的输出信息，如默认磁盘 sda
+   $ dmesg | grep 'sda'
+   # 清空缓存区信息
+   $ dmesg -c
+
 
 
 Reference
