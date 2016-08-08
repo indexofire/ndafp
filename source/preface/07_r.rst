@@ -1,10 +1,29 @@
 R 语言入门
 ==========
 
+安装R
+-----
+
+Ubuntu 下的安装添加 ppa 源来安装最新的 R 版本。
+
+.. code-block:: bash
+
+   $ sudo add-apt-repository ppa:marutter/rrutter
+   $ sudo apt-get update
+   $ sudo apt-get upgrade
+   $ sudo apt-get install r-base
 
 
+安装 bioconductor
+-----------------
+
+安装可以在 R 命令行界面里操作。在终端直接输入`R`，如果安装了Rstudio，也可以运行 rstudio。
+
+.. code-bash:: R
+
+   > source("https://bioconductor.org/biocLite.R")
+   > biocLite()
 
 R 在线教程
 ----------
-
-- `OnePage R <http://togaware.com/onepager/>`_
+- OnePage R <http://togaware.com/onepager/>.. co

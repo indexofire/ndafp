@@ -7,3 +7,4 @@
    01_blast
    02_msa
    03_mapping
+   04_call_variant

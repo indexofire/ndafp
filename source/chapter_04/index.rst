@@ -1,8 +1,8 @@
-基因组数据可视化
+第四章.基因组数据可视化
 ================
 
-.. doctree::
+.. toctree::
    :maxdepth: 1
 
-   circos
-   ggplot2
+   01_circos
+   02_ggplot2

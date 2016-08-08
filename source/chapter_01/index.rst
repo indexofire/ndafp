@@ -7,3 +7,4 @@
    01_quality_control
    02_assembly
    03_annotation
+   04_practice
