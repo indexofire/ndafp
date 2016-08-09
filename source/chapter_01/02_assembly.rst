@@ -1,39 +1,49 @@
 第2节. 基因组拼接
 =================
 
-物种的核酸特性以及测序技术的发展，不断有针对新技术优化的拼接软件出现。这里比较几个微生物拼接评测中比较优秀的工具，看看针对目标物种的拼接结果。个人最常用的拼接软件是spades，目前版本是3.8.2。也可以先对自己的测序物种做一个 assembly evaluation，选择比较适合的拼接软件。
+微生物基因组测序后的拼接工作，有许多软件可以完成。近几年不断有新的优秀拼接软件涌现，本节仅挑选几个微生物基因组拼接使用较多也是评测中比较优秀的几个工具。也可以先对自己的测序物种做一个 assembly evaluation，选择比较适合的拼接软件。
 
+**常用拼接软件工具列表**
+- `SPAdes <http://spades.bioinf.spbau.ru/>`_
+- `MaSuRCA <http://www.genome.umd.edu/masurca.html>`_
+- Velvet
+- A5_miseq
+
+更多工具可以参见`这里 <https://omictools.com/genome-assembly-category>`_
+
+--------------------------------------------------------------------------------
 
 1. SPAdes
 ---------
+
+SPAdes 是由
 
 1.1 下载并安装 SPAdes
 ^^^^^^^^^^^^^^^^^^^^^
 
 .. code-block:: bash
 
-   ~/tmp$ curl -O http://spades.bioinf.spbau.ru/release3.8.2/SPAdes-3.8.2-Linux.tar.gz
-   ~/tmp$ tar zxf SPAdes-3.8.2-Linux.tar.gz -C ~/app
+   ~/tmp$ curl -O http://spades.bioinf.spbau.ru/release3.9.0/SPAdes-3.9.0-Linux.tar.gz
+   ~/tmp$ tar zxf SPAdes-3.9.0-Linux.tar.gz -C ~/app
    ~/tmp$ cd ~/app
-   ~/app$ sudo ln -s `pwd`/SPAdes-3.8.2-Linux/bin/* /usr/local/sbin
+   ~/app$ sudo ln -s `pwd`/SPAdes-3.9.0-Linux/bin/* /usr/local/sbin
 
 1.2 拼装基因组
 ^^^^^^^^^^^^^^
 
 .. code-block:: bash
 
-   ~/app$ spades.py -t 2 -1 SRR95386_1.fastq -2 SRR955386_2.fastq -o spades_output
+   # -t 40 表示用40个 threads 进行拼接，根据自己电脑的CPU情况自行设置。
+   ~/app$ spades.py -t 40 -1 SRR95386_1.fastq -2 SRR955386_2.fastq -o spades_output
 
-SPAdes会尝试不同的Kmer，因此拼装时间也会根据Kmer选择数量成倍增加。
-
-对于常见的 Miseq v2/v3 试剂盒，采用 PE150/PE250/PE300 的读长测序，常用的拼接命令是：
+SPAdes会尝试不同的Kmer，因此拼装时间也会根据Kmer选择数量成倍增加。对于常见的 Miseq v2/v3 试剂盒，采用 PE150/PE250/PE300 的读长测序，常用的拼接命令是：
 
 .. code-block:: bash
 
    # PE150 读长测序数据
-   ~/apps spades.py -k 21,33,55,77 --careful SRR95386_1.fastq -2 SRR955386_2.fastq -o SRR95386_output
-   # PE250 读长测序数据
-   ~$ apps spades.py -k 21,33,55,77,99,127 --careful SRR95386_1.fastq -2 SRR955386_2.fastq -o SRR95386_output
+   ~/apps$ spades.py -t 40 -k 21,33,55,77 --careful -1 SRR95386_1.fastq -2 SRR955386_2.fastq -o SRR95386_output
+   # PE250/300 读长测序数据
+   ~/apps$ spades.py -t 40 -k 21,33,55,77,99,127 --careful -1 SRR95386_1.fastq -2 SRR955386_2.fastq -o SRR95386_output
 
 --------------------------------------------------------------------------------
 
@@ -45,8 +55,8 @@ SPAdes会尝试不同的Kmer，因此拼装时间也会根据Kmer选择数量成
 
 .. code-block:: bash
 
-   ~/tmp$ curl -O ftp://ftp.genome.umd.edu/pub/MaSuRCA/MaSuRCA-2.3.0.tar.gz
-   ~/tmp$ tar zxvf MaSuRCA-2.3.0.tar.gz -C ~/app
+   ~/tmp$ curl -O ftp://ftp.genome.umd.edu/pub/MaSuRCA/MaSuRCA-3.1.3.tar.gz
+   ~/tmp$ tar zxvf MaSuRCA-3.1.3.tar.gz -C ~/app
    ~/tmp$ cd ~/app
    ~/app$ ./MaSuRCA-2.3.0/install.sh
    ~/app$ sudo ln -s `pwd`/MaSuRCA-2.3.0/bin/masurca /usr/local/sbin
