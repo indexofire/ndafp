@@ -86,8 +86,14 @@
    from Bio.Seq import Seq
    from Bio.SeqRecord import SeqRecord
    from Bio.Alphabet import generic_nucleotide
+   import argparse
 
-   qc_file = Fadapa("../qc/RN01_S01_L001_R1_001_fastqc/fastqc_data.txt")
+   parser = argparse.ArgumentParser()
+   parser.add_argument('-i', action=store, dest='qc_file', type=str \
+       help='input your fastqc data')
+   args = parser.parse_args()
+
+   qc_file = Fadapa(args.qc_file)
 
    if qc_file.summary()[-3][0] == 'fail':
        adaptors = []
@@ -97,7 +103,7 @@
        for (index, seq) in enumerate(ors):
            adaptors.append(SeqRecord(Seq(seq[0], generic_nucleotide), id="adaptor_%d" % (index+1), description=""))
 
-       SeqIO.write(adaptors, "adaptors/adaptor.fasta", "fasta")
+       SeqIO.write(adaptors, "adaptor.fasta", "fasta")
        print "Overrepresented sequences has been save to adaptors.fasta"
    else:
        print "No Overrepresented sequences"
