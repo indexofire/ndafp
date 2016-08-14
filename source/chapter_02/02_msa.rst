@@ -9,4 +9,9 @@
 
 2.3 Mafft
 
+.. code-block:: bash
+
+   $ maftt seq/*.fasta > alignment
+
+
 2.4 Muscle

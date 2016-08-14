@@ -29,7 +29,7 @@ Miseq 下机数据分析应用实例
     ~/data$ for i in $(awk -F"L001" '{gsub("_$","",$1);print $1}' \
     > <(ls *.fastq.gz) | sort | uniq); \
     > do mkdir $(basename $i) && mkdir $(basename $i)/raw; \
-    > mv $i*.fastq.gz $(basename $i)/raw/. ; done
+    > mv $i*.fastq.gz $(basename $i)/raw/ ; done
 
     # 查看生成的各个样本的文件夹
     ~/data$ ls -d */
