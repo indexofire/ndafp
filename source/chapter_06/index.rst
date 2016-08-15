@@ -8,3 +8,4 @@
    02_centrifuge.rst
    03_clark-s.rst
    04_kraken.rst
+   05_meta-beetl.rst
