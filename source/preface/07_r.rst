@@ -19,11 +19,11 @@ Ubuntu 下的安装添加 ppa 源来安装最新的 R 版本。
 
 安装可以在 R 命令行界面里操作。在终端直接输入`R`，如果安装了Rstudio，也可以运行 rstudio。
 
-.. code-bash:: R
+.. code-block:: R
 
    > source("https://bioconductor.org/biocLite.R")
    > biocLite()
 
 R 在线教程
 ----------
-- OnePage R <http://togaware.com/onepager/>.. co
+- OnePage R <http://togaware.com/onepager/>

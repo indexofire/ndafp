@@ -130,7 +130,7 @@ Velvet 是一个老牌的基因组测序数据拼接软件。Velvet最新版本�
 
 make可以进行编译，有几个编译参数可以选择，分别是MAXKMERLENGTH, DIRECTORY
 
-.. codb-block:: bash
+.. code-block:: bash
 
    ~$ cd ~/app/velvet
    ~/app/velvet$ make 'MAXKMERLENGTH=127'

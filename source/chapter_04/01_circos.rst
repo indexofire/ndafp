@@ -70,7 +70,7 @@ circos 主要需要2类文件：
 
 由于circos只是画图工具，因此你图中要展示的数据需要自己预先准备好。比如基因组的GC含量，需要用其他程序先生成以下这种类型的文本格式文件。
 
-.. code-block::
+.. code::
 
    染色体 开始位置 结束位置 颜色值 其他选项[可选]
    2.chr1  1000    2000  red
@@ -94,7 +94,7 @@ circos 主要需要2类文件：
 
 这是circos主配置文件，其他的配置文件可以通过include的方式来导入。
 
-.. code-block::
+.. code::
 
    <<include your_other_configure.conf>>
 
@@ -118,7 +118,7 @@ circos 主要需要2类文件：
 
 如果是某个参数在多个block中都重复使用，那么可以设置成 global 的参数，当某个block要使用新的值时，再用 local 的参数覆盖即可。
 
-.. code-block::
+.. code::
 
    # plot可以理解为图层，多个圈图图层构成一个plots
    <plot></plot>
@@ -138,7 +138,7 @@ circos 主要需要2类文件：
 
 circos.conf 参数
 
-.. code-block::
+.. code::
 
    # 染色体的数据集
    karyotype = data.txt
