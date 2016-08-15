@@ -67,7 +67,7 @@
     ~$ bwa index ST17.fasta
 
 2.3 将测序 reads 比对到 ST17 并排序索引
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 用\ ``bwa mem``\ 进行比对，输出的结果通过管道由\ ``samtools``\ 转换成 BAM 文件并进行排序和索引。
 
@@ -134,7 +134,7 @@ bam文件含有比对的信息，可以用\ ``stats``\ 参数查看
 
 结果输出：
 
-:: code-block:: bash
+.. code-block:: bash
 
     1   gene=yfiR
     2   inference=ab initio prediction:Prodigal:2.60,similar to AA sequence:RefSeq:YP_261793.1,protein motif:TIGRFAMs:TIGR03756,protein motif:Pfam:PF06834.5
@@ -236,14 +236,7 @@ Snippy还可以生成多个基因组的共有SNPs的比对文件。用snippy分�
     ~$ raxmlHPC -f a -x 12345 -p 12345 -# 100 -m GTRGAMMA -s core.phy -n ex -T 4
     ~$ figtree RAxML_bestTree.ex
 
-生成的进化树图类似下图
-
-.. figure:: ../_static/img/chapter_02/RAxML_bestTree.ex.png
-   :alt: Alt text
-
-   Alt text
-
-    因为比对的是fasta格式的文件，所以snps不止是编码区CDS的，而是整个基因组上的snps。
+因为比对的是fasta格式的文件，所以snps不止是编码区CDS的，而是整个基因组上的snps。
 
 4. 用 Workflow 脚本来简化操作
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^

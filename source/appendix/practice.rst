@@ -10,19 +10,10 @@
    ├── Sample_1
    │   ├── 00_raw
    │   │   └── *.fastq.gz
-   │   ├── 01_assembly
-   │   ├── 02_clean
-   │   ├── 01_assembly
-   │   ├── 01_assembly
-   │   ├── 01_assembly
-   │   ├── 01_assembly
-   │   │   │   ├── corrector
-   │   │   │   │   └── corrector.info
-   │   │   │   ├── debruijn
-   │   │   │   │   ├── careful_mode.info
-   │   │   │   │   ├── config.info
-   │   │   │   │   ├── construction.info
-   │   │   │   │   ├── datasets
+   │   ├── 01_trimmed
+   │   ├── 02_assembly
+   │   ├── 03_clean
+   │   ├── 10_fasta
    ...
    └── Sample_N
         ├── 00_raw

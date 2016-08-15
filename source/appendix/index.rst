@@ -5,3 +5,5 @@
    :maxdepth: 1
 
    file_format
+   get_data
+   practice
