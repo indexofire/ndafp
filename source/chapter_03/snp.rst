@@ -48,13 +48,13 @@ REALPHY 依赖以下软件：
 
 **构建进化树**
 
-a. 最基本用法，将 reference.fasta（最好是完成的基因组） 放入 input 文件夹，如果放置多个参考基因组，软件会随机选择其中一个作为参考基因组。然后将测序的 fastq 数据放入 input 数据库，建议先对测序数据进行一定的QC操作，避免测序错误引入的错误 SNP 位点。
+a. 最基本用法，将参考基因组 reference（最好是完成的基因组） 放入 input 文件夹，可以是 fasta 和 genbank 格式，如果放置多个 fasta/gbk 文件，软件会随机选择其中一个作为参考基因组，并将其他序列作为比对序列。如果指定某个序列作为参考基因组，用 `-ref` 参数指定。fastq 数据作为比对数据放入 input 文件夹，如果是PE测序的数据，双端的fastq文件名要用 *_R1.fastq\/\*_R2.fastq 区分。fastq 数据建议先对测序数据进行一定的QC操作，尽可能减少测序错误引入的 SNP 位点。
 
 .. code-block:: bash
 
    $ realphy input output -ref ref_genome
 
-b. 对核心基因组构建进化树。默认的方式是对参比基因组全部区域比对，包括非编码区。如果希望仅对CDS进行比对，就可以通过以下方式。
+b. 对核心基因组构建进化树。默认的方式是对参比基因组全部区域比对，包括非编码区。如果希望仅对CDS进行比对，就可以通过添加 `-genes` 参数。如果添加了 -genes 参数，那么参考基因组文件格式必须是含有 CDS 的 genbank 格式数据。
 
 .. code-block:: bash
 
@@ -72,6 +72,8 @@ c. 使用多个参考基因组。这是 REALPHY 的一个“卖点”，作者�
 
    $ scp user@server-ip:~/data/REF/PolySeqOut/RAxML_bestTree.raxml .
    $ figtree RAxML_bestTree.raxml
+
+--------------------------------------------------------------------------------
 
 1.2 Snippy
 ^^^^^^^^^^
