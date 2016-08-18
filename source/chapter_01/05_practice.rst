@@ -2,7 +2,7 @@ Miseq 下机数据分析应用实例
 ==========================
 
 在 Miseq 上通过对24个混合样本的PE测序，获得的下机 PF Data，从 Quality Control
-到 de novo assembly 过程的基本操作流程。[#f1]_
+到 de novo assembly 过程的基本操作流程。[#f1]
 
 1. 前期处理
 -----------
@@ -27,7 +27,7 @@ Miseq 下机数据分析应用实例
 
     # 新建以样本名为文件夹名，并移动数据到文件夹的raw目录下
     ~/data$ for i in $(awk -F"L001" '{gsub("_$","",$1);print $1}' \
-    > <(ls *.fastq.gz) | sort | uniq); \
+    > <(ls -D *.fastq.gz) | sort | uniq); \
     > do mkdir $(basename $i) && mkdir $(basename $i)/raw; \
     > mv $i*.fastq.gz $(basename $i)/raw/ ; done
 
@@ -75,4 +75,4 @@ Miseq v3
 
 .. rubric:: Reference
 
-.. [#f1] fdakljfdla
+.. [#f1] ../chapter_04/index.html

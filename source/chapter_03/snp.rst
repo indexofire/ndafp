@@ -86,9 +86,32 @@ c. 使用多个参考基因组。这是 REALPHY 的一个“卖点”，作者�
    $ echo 'export PATH="$HOME/repos/snippy/bin:$HOME/repos/snippy/binary/linux:$PATH"' >> ~/.bashrc
    $ source ~/.bashrc
 
-**Docker容器使用**
+**使用Snippy**
 
+.. code-block:: bash
 
+   # 单个样本用 snippy 分别比对获得每个样本的 snps
+   $ snippy --cpus 20 --outdir S01 -ref reference.fa --R1 S01_R1_L001.fastq.gz --R2 S01_R2_L001.fastq.gz
+   $ snippy --cpus 20 --outdir S02 -ref reference.fa --R1 S02_R1_L001.fastq.gz --R2 S02_R2_L001.fastq.gz
+   ...
+   # 将所有 snps 结果汇总，获得 core snps
+   $ snippy-core --prefix core-snps S01 S02 S03 ...
+   # 单行脚本完成所有样本 snps 比对工作
+   $ for i in $(awk -F'_' '{print $1}' <(ls -D *.fastq.gz) | sort | uniq); \
+   > do snippy --cpus 20 --outdir $i -ref reference.fa --R1 $i*R1*.fastq.gz --R2 $i*R2*.fastq.gz; \
+   > done
+   $ dirs=(ls -d */) && snippy-core --prefix core-snps $dirs
+   # 生成的 .aln 格式比对文件转换成 .phy 格式
+   $ python aln2phy.py -in core-snps/core.aln -out core-snps/core.phy
+
+aln2phy.py 脚本的代码如下：
+
+.. literalinclude:: aln2phy.py
+
+.. code-block:: bash
+
+   # 构建进化树
+   $ raxml -p 12345 -m GTRGAMMA -
 
 2. 不需要参考基因组的软件
 -------------------------
