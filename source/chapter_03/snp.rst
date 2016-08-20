@@ -100,7 +100,7 @@ c. 使用多个参考基因组。这是 REALPHY 的一个“卖点”，作者�
    $ for i in $(awk -F'_' '{print $1}' <(ls -D *.fastq.gz) | sort | uniq); \
    > do snippy --cpus 20 --outdir $i -ref reference.fa --R1 $i*R1*.fastq.gz --R2 $i*R2*.fastq.gz; \
    > done
-   $ dirs=(ls -d */) && snippy-core --prefix core-snps $dirs
+   $ snippy-core --prefix core-snps S*
    # 生成 clustal 格式的 core.aln 比对文件，这里用 splittree 构建进化树
    $ splittree -i core-snps/core.aln
    # 或者将生成的 .aln 格式比对文件转换成 .phy 格式，然后再用 raxml 构建 ML 树
@@ -135,4 +135,4 @@ kSNP 采用的是基于 kmer 的算法，不需要进行序列的多重比对，
 
 .. code-block:: bash
 
-   $ 
+   $
