@@ -82,7 +82,7 @@ c. 使用多个参考基因组。这是 REALPHY 的一个“卖点”，作者�
 
 .. code-block:: bash
 
-   $ cd repos && git clone https://github.com/tseemann/snippy
+   $ git clone https://github.com/tseemann/snippy
    $ echo 'export PATH="$HOME/repos/snippy/bin:$HOME/repos/snippy/binary/linux:$PATH"' >> ~/.bashrc
    $ source ~/.bashrc
 
