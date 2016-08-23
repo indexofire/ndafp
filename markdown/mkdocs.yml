@@ -1,5 +1,5 @@
 site_name: 病原微生物基因组NGS数据分析
 pages:
 - Home: index.md
-- Blog: 01_anthrax_analysis_snps_by_snippy.md
+- Blog: 01_anthrax_comparative_analysis.md
 theme: readthedocs
