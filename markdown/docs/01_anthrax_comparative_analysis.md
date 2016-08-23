@@ -85,7 +85,7 @@ R 绘制 gc 分布图，如果 gc 含量偏差超过 10% 时就剔除该基因�
 
 ```bash
 # 使用脚本 scan_adaptors.py 来扫描下载的高通量基因组测序数据是否有接头污染的情况。
-$ fastqc -t 40 -d qc -q --extract *.fastq.gz
+$ fastqc -t 40 -q --extract *.fastq.gz
 $ python scan_fastqc_report.py -d qc
 ```
 
@@ -93,12 +93,36 @@ $ python scan_fastqc_report.py -d qc
 #!usr/bin/env python
 # -*- coding: utf-8 -*-
 # scripts name: scan_fastqc_report.py
+import os
+from Bio.Seq import Seq
+from Bio import SeqIO
+from Bio.SeqRecord import SeqRecord
+from Bio.Alphabet import generic_nucleotide
 from fadapa import Fadapa
 import argparse
 
 parser = argparse.ArgumentParser()
-parser.add_argument()
+parser.add_argument('-i', '--input', action='store', dest='qcfile', type=str, help="fastqc extract data file")
+parser.add_argument('-o', '--output', action='store', dest='adaptor', type=str, help="adaptors file")
+args = parser.parse_args()
+qc_file = Fadapa(args.qcfile)
 
+if qc_file.summary()[-3][0] == 'fail':
+    adaptors = []
+    ors = qc_file.clean_data("Overrepresented sequences")
+    ors.pop(0)
+
+    for (index, seq) in enumerate(ors):
+        if 'NNNNNN' in seq[0]:
+            continue
+        adaptors.append(SeqRecord(Seq(seq[0], generic_nucleotide), id="adaptor_%d" % (index+1)))
+
+    if not os.path.exists(args.adaptor):
+        os.makedirs(args.adaptor)
+    SeqIO.write(adaptors, "%s/adaptor.fasta" % args.adaptor, "fasta")
+    print "Overrepresented sequences has been save to adaptors.fasta"
+else:
+    print "No Overrepresented sequences"
 ```
 
 
