@@ -1,17 +1,15 @@
-## 炭疽芽胞杆菌基因组 SNPs 分析
+# 炭疽芽胞杆菌基因组 SNPs 分析
 
-G20备战期间，单位要加强生物恐怖事件的防控。最著名的细菌性生物恐怖战剂就是含有炭疽芽胞杆菌的白色粉末。由于日常工作中我们无法接触到这些病原，因此在经验和技能方面都只能处于理论状态（真有实战也是由军方出面）。但是对于能力建设，为了应对万一发生的可疑事件，在基因组数据分析的技术方面我们还是要首先做好储备。构建相应的数据库，在获得菌株后可以第一时间就掌握到基因组溯源方面的资料。
+G20备战期间，单位要加强生物恐怖事件的防控能力。最著名的细菌性生物恐怖战剂就是含有炭疽芽胞杆菌的白色粉末。由于日常工作中无法接触到这些病原，因此在经验和技能方面都只能处于理论状态（即使实战一般也是由军科院等机构出面）。但是为了能力建设，应对万一发生的疑似事件，在基因组数据分析的技术方面还是可以做好准备。构建相应的分析流程，在获得菌株基因组数据后可以第一时间就进行溯源方面的研究。从而在这准备工作的过程中形成了此文档。主要目的也是为了抛砖引玉，做到举一反三，给其他细菌性病原微生物基因组溯源分析时提供参考。
 
-因此在工作的基础上形成了该文档。主要目的也是为了举一反三，在应用生物信息学对其他细菌性病原微生物溯源分析提供参考。
+软件中使用的一些参数是根据自己的服务器设置的，具体运行时需要根据计算机配置进行相应的调整。我们服务器的配置如下：
 
-软件中使用的一些参数是根据我们自己的服务器设置的，你需要根据自己的计算机进行相应的调整。我们服务器的配置如下：
-
-* CPU: E3 2650 x2
+* CPU: E3 2650v3 x2
 * Memory: ECC 16G x8
 * Harddisk: 7200转 1T x4 组 Raid 5 + 1 Hotspare
 * System: Ubuntu 16.04 LTS 64bit
 
-### 1. 获取公共数据库数据
+## 1. 获取公共数据库数据
 
 手中没有炭疽芽胞杆菌的资源，自己没有办法做测序的前提下，我们只能通过下载 NCBI SRA 数据库中他人提交的基因组测序数据来作分析。
 
@@ -25,11 +23,40 @@ $ esearch -db sra -query '"Bacillus anthracis"[Organism] AND \
 > xargs fastq-dump --split-files --gzip --outdir bacillus_anthracis
 ```
 
-### 2. 数据的前期处理
+虽然我们检索时限定了 PE 测序数据，但是很多时候数据库里的信息不准确，还是会有很多 SE 的数据会被下载。确定 PE 或者 SE 的方法很多。
+
+```bash
+# sra-stat 统计 sra 文件，nreads=1 表示 SE 测序，nreads=2 表示 PE 测序。程序统计整个文件，速度比较慢
+$ sra-stat -xs *.sra | grep "nreads"
+# 批量删除
+$ parallel 'sra-stat -xs' ::: *.sra | xtract -Pattern Run -element Run@accession \
+> Statistics@nreads | awk '{if($2==1) print $1}' | xargs rm
+
+# fastq-dump 输出一个 reads，计算行数如果是4，那么就是 SE，如果是8,则是 PE
+$ fastq-dump -X 1 --split-spot -Z SRR955386.sra | wc -l
+
+# fastq-dump 自己判断，当 sra 文件是 SE 测序时，fastq-dump 只能生成1个 *_1.fastq 文件
+$ fastq-dump --split-files ERR493452.sra
+
+# fastq-dump 只能调用单核转换，可以使用 parallel 工具并行处理加快速度。
+$ parallel "fastq-dump --split-files --gzip --outdir bacillus_anthracis" ::: *.sra
+```
+
+有时候有些sra文件在 dump 时会出错，不能生成对应的 PE fastq 文件，这就需要比较后删除了。如果是 mate pair 的数据，会生成 `*_3.fastq.gz`，如果不需要则可手工删除。
+
+```bash
+# 核对 PE 双端测序文件是否一致
+$ ls -l *_1.fastq.gz | awk '{print $9}' | awk -F'_' '{print $1}' > R1.txt
+$ ls -l *_2.fastq.gz | awk '{print $9}' | awk -F'_' '{print $1}' > R2.txt
+$ diff R1.txt R2.txt
+# diff 如果2个文件内容一致，则终端不会有输出。否则就要删除文件
+```
+
+## 2. 数据的前期处理
 
 由于是公共数据库下载的数据，并不能保证测序实验质量或者数据提交者是否提交的是质控后的数据。因此建议要对数据做一些前期的质控处理。
 
-#### 2.1 数据 QC
+### 2.1 数据 QC
 
 首先对基因组 GC 含量和 Q 值进行初步筛选，对于偏差较大的数据考虑直接剔除（或者用其他软件验证看是否是错误物种）。这里使用的工具为 `bioawk` 或 `parallel`。
 
@@ -38,20 +65,61 @@ $ esearch -db sra -query '"Bacillus anthracis"[Organism] AND \
 $ for i in *.fastq.gz; do bioawk -c fastx 'BEGIN{n=0;q=0}{n+=gc($seq);q+=meanqual($seq)}END{print $name,n/NR,q/NR}' $i >> result.txt; done
 # awk 类工具是单进程的，为了加速可以使用 parallel 来并行计算
 $ parallel "bioawk -c fastx 'BEGIN{n=0;q=0}{n+=gc(\$seq);q+=meanqual(\$seq)}END{print \$name,n/NR,q/NR}' >> result.txt" ::: *.fastq.gz
-# 绘制 gc 分布图，如果 gc 含量偏差超过 n% 时就剔除该基因组数据。
-$
+# 按照 GC 含量排序
+$ cat result.txt | sort -n -k3
 ```
 
-#### 2.2 去除接头
+R 绘制 gc 分布图，如果 gc 含量偏差超过 10% 时就剔除该基因组数据。
 
-其次要看一下接头污染的情况。因为分析流程中不仅包括 mapping 的方式，还包含 de novo assembly，为了避免接头序列对基因组拼接的影响，这里最好进行。这里使用的工具是 `FastQC` 和 `fadapa`
+```r
+> library(ggplot2)
+> data<-read.table("result.txt")
+> qplot(v2, v3, data=data)
+```
+
+结果显示有一个黑点的GC含量特别低，且Q值特别高。结果显示测序实验 SRR2155551 和 SRR2164197 的 GC 含量仅为22%，而其他样本 GC 含量范围在34%～41%。且这2个实验的样本均为同一个，是1个样本的2此测序（或者数据上传了2次），因此将其剔除。
+
+### 2.2 去除接头
+
+其次要去除接头的污染。因为分析流程中不仅包括 mapping 的方式，还包含 de novo assembly，为了避免接头序列对基因组拼接的影响，这里最好进行。这里使用的工具是 `FastQC` 和 `fadapa`
 
 ```bash
 # 使用脚本 scan_adaptors.py 来扫描下载的高通量基因组测序数据是否有接头污染的情况。
 $ fastqc -t 40 -d qc -q --extract *.fastq.gz
+$ python scan_fastqc_report.py -d qc
 ```
 
-### 3. 用 Snippy 获得 snps
+```python
+#!usr/bin/env python
+# -*- coding: utf-8 -*-
+# scripts name: scan_fastqc_report.py
+from fadapa import Fadapa
+import argparse
+
+parser = argparse.ArgumentParser()
+parser.add_argument()
+
+```
+
+
+## 3. Pangenome 分析
+
+### 3.1 基因组组装
+
+### 3.2 基因组注释
+
+### 3.3 Roary & Phandango
+
+### 3.4 Harvest
+
+```bash
+
+```
+
+
+## 3. SNPs 构建进化树
+
+### 3.1 用 Snippy 获得 snps
 
 ```bash
 $ for i in *.fastq.gz | sort | uniq; \
@@ -60,11 +128,32 @@ $ for i in *.fastq.gz | sort | uniq; \
 $ snippy-core --prefix core-snps SRR* DRR* ERR*
 ```
 
-### 4. 用 RAxML 绘制进化树
+### 3.2 用 RAxML 构建进化树
 
 ```bash
-$ raxmlHPC -f a -x 12345 -p 12345 -# 100 -m GTRGAMMA -s alignment.phy -n .ex -T 40
+$ raxml -f a -x 12345 -p 12345 -# 100 -m GTRGAMMA -s core-snps.aln -n ex -T 40
 ```
+
+### 3.3 用 Figtree 绘制进化树
+
+```bash
+$ scp user@server-ip:/path/RAxML_bestTree.ex .
+$ figtree RAxML_bestTree.ex &
+```
+
+## 4. 基因组组装
+
+```bash
+
+```
+
+## 5. Pangenome 分析
+
+
+
+##
+
+
 
 ### 相关软件安装
 
@@ -139,8 +228,8 @@ $ sudo cp snippy/binaries/linux/* /usr/local/sbin
 $ wget https://github.com/stamatak/standard-RAxML/archive/v8.1.17.tar.gz
 $ sudo tar zxf v8.1.17.tar.gz -C /opt/raxml
 $ sudo chown -R root:root /opt/raxml && cd /opt/raxml
-$ sudo make -f Makefile.gcc
-$ sudo cp raxmlHPC /usr/local/sbin
+$ sudo make -f Makefile.SSE3.PTHREADS.gcc
+$ sudo ln -s `pwd`/raxmlHPC-PTHREADS-SSE3 /usr/local/raxml
 ```
 
 ### Reference

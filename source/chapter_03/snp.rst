@@ -104,12 +104,7 @@ c. 使用多个参考基因组。这是 REALPHY 的一个“卖点”，作者�
    # 生成 clustal 格式的 core.aln 比对文件，这里用 splittree 构建进化树
    $ splittree -i core-snps/core.aln
    # 或者将生成的 .aln 格式比对文件转换成 .phy 格式，然后再用 raxml 构建 ML 树
-   $ python aln2phy.py -in core-snps/core.aln -out core-snps/core.phy
-   $ raxml -p 12345 -m GTRGAMMA -
-
-aln2phy.py 脚本的代码如下：
-
-.. literalinclude:: aln2phy.py
+   $ raxml -f a -x 12345 -# 100  -p 12345 -m GTRGAMMA -s core.aln -n ex -T 40
 
 2. 不需要参考基因组的软件
 -------------------------
