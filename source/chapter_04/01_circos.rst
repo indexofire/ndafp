@@ -168,11 +168,8 @@ circos.conf 参数
 .. code-block:: bash
 
    ~$ esearch -db nuccore -query "NC_003197.1[accn]" | efetch -db nuccore -format fasta > LT2.fasta
-   ~$ esearch -db nuccore -query "NC_003197.1[accn]" | efetch -db nuccore -format gb > LT2.gb
 
 绘制 circos 所需要的 ideogram 所需要的几类数据，我们通过一个 python 脚本 get\_circos\_data.py 来获得。
-
-.. code-block:: python
 
 运行脚本：
 

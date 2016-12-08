@@ -65,12 +65,14 @@ Fork笔记方法
    :glob:
 
    preface/index
+   chapter_00/index
    chapter_01/index
    chapter_02/index
    chapter_03/index
    chapter_04/index
    chapter_05/index
    chapter_06/index
+   chapter_07/index
    appendix/index
 
 版本更新

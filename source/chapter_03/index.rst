@@ -8,3 +8,4 @@
    02_orthologs_analysis
    03_phylogenomics
    04_get_homologues
+   snp.rst
