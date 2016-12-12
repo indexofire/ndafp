@@ -1,129 +1,162 @@
 <!DOCTYPE html>
-<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<html lang="en">
+
 <head>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  
-  
-  
-  <title>Blog - 病原微生物基因组NGS数据分析</title>
-  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">   
+    <link rel="shortcut icon" href="../img/favicon.ico">
 
-  <link rel="shortcut icon" href="../img/favicon.ico">
+    <title>Blog - 病原微生物基因组NGS数据分析</title>
 
-  
-  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+    <link href="../css/bootstrap-custom.min.css" rel="stylesheet">
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/font-hack/2.018/css/hack.min.css">
+    <link href='//fonts.googleapis.com/css?family=PT+Sans:400,400italic,700,700italic&subset=latin-ext,latin' rel='stylesheet' type='text/css'>
+    <link href='//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,700italic,400,300,600,700&subset=latin-ext,latin' rel='stylesheet' type='text/css'>
+    <link href="../css/base.css" rel="stylesheet">
+    <link href="../css/cinder.css" rel="stylesheet">
+    <link rel="stylesheet" href="../css/highlight.css">
 
-  <link rel="stylesheet" href="../css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="../css/theme_extra.css" type="text/css" />
-  <link rel="stylesheet" href="../css/highlight.css">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+        <![endif]-->
 
-  
-  <script>
-    // Current page data
-    var mkdocs_page_name = "Blog";
-    var mkdocs_page_input_path = "01_anthrax_comparative_analysis.md";
-    var mkdocs_page_url = "/01_anthrax_comparative_analysis/";
-  </script>
-  
-  <script src="../js/jquery-2.1.1.min.js"></script>
-  <script src="../js/modernizr-2.8.3.min.js"></script>
-  <script type="text/javascript" src="../js/highlight.pack.js"></script>
-  <script src="../js/theme.js"></script> 
+    <script src="https://ajax.googleapis.com/ajax/libs/webfont/1.5.18/webfont.js"></script>
+    <script>
+    WebFont.load({
+        google: {
+            families: ['Open Sans', 'PT Sans']
+        }
+    });
+    </script>
 
-  
+    
 </head>
 
-<body class="wy-body-for-nav" role="document">
+<body>
 
-  <div class="wy-grid-for-nav">
+    <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+    <div class="container">
 
-    
-    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
-      <div class="wy-side-nav-search">
-        <a href=".." class="icon icon-home"> 病原微生物基因组NGS数据分析</a>
-        <div role="search">
-  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
-  </form>
-</div>
-      </div>
-
-      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
-        <ul class="current">
-          
-            <li>
-    <li class="toctree-l1 ">
-        <a class="" href="..">Home</a>
-        
-    </li>
-<li>
-          
-            <li>
-    <li class="toctree-l1 current">
-        <a class="current" href="./">Blog</a>
-        
-            <ul>
+        <!-- Collapsed navigation -->
+        <div class="navbar-header">
             
-                <li class="toctree-l3"><a href="#snps">炭疽芽胞杆菌基因组 SNPs 分析</a></li>
-                
-                    <li><a class="toctree-l4" href="#1">1. 获取公共数据库数据</a></li>
-                
-                    <li><a class="toctree-l4" href="#2">2. 数据的前期处理</a></li>
-                
-                    <li><a class="toctree-l4" href="#3-pangenome">3. Pangenome 分析</a></li>
-                
-                    <li><a class="toctree-l4" href="#3-snps">3. SNPs 构建进化树</a></li>
-                
-                    <li><a class="toctree-l4" href="#4">4. 基因组组装</a></li>
-                
-                    <li><a class="toctree-l4" href="#5-pangenome">5. Pangenome 分析</a></li>
-                
-                    <li><a class="toctree-l4" href="#_2">相关软件安装</a></li>
-                
-                    <li><a class="toctree-l4" href="#reference">Reference</a></li>
-                
+            <!-- Expander button -->
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
             
+
+            <!-- Main title -->
+            <a class="navbar-brand" href="..">病原微生物基因组NGS数据分析</a>
+        </div>
+
+        <!-- Expanded navigation -->
+        <div class="navbar-collapse collapse">
+            
+                <!-- Main navigation -->
+                <ul class="nav navbar-nav">
+                
+                
+                    <li >
+                        <a href="..">Home</a>
+                    </li>
+                
+                
+                
+                    <li class="active">
+                        <a href="./">Blog</a>
+                    </li>
+                
+                
+                </ul>
+            
+
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <a href="#" data-toggle="modal" data-target="#mkdocs_search_modal">
+                        <i class="fa fa-search"></i> Search
+                    </a>
+                </li>
+                
+                    <li >
+                        <a rel="next" href="..">
+                            <i class="fa fa-arrow-left"></i> Previous
+                        </a>
+                    </li>
+                    <li class="disabled">
+                        <a rel="prev" >
+                            Next <i class="fa fa-arrow-right"></i>
+                        </a>
+                    </li>
+                
+                
             </ul>
-        
-    </li>
-<li>
-          
-        </ul>
-      </div>
-      &nbsp;
-    </nav>
-
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
-
-      
-      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
-        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-        <a href="..">病原微生物基因组NGS数据分析</a>
-      </nav>
-
-      
-      <div class="wy-nav-content">
-        <div class="rst-content">
-          <div role="navigation" aria-label="breadcrumbs navigation">
-  <ul class="wy-breadcrumbs">
-    <li><a href="..">Docs</a> &raquo;</li>
-    
-      
-    
-    <li>Blog</li>
-    <li class="wy-breadcrumbs-aside">
-      
-    </li>
-  </ul>
-  <hr/>
+        </div>
+    </div>
 </div>
-          <div role="main">
-            <div class="section">
-              
-                <h1 id="snps">炭疽芽胞杆菌基因组 SNPs 分析</h1>
+
+    <div class="container">
+        
+        <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
+    <ul class="nav bs-sidenav">
+    
+        <li class="first-level active"><a href="#snps">炭疽芽胞杆菌基因组 SNPs 分析</a></li>
+        
+            <li class="second-level"><a href="#1">1. 获取公共数据库数据</a></li>
+            
+        
+            <li class="second-level"><a href="#2">2. 数据的前期处理</a></li>
+            
+                <li class="third-level"><a href="#21-qc">2.1 数据 QC</a></li>
+            
+                <li class="third-level"><a href="#22">2.2 去除接头</a></li>
+            
+        
+            <li class="second-level"><a href="#3-pangenome">3. Pangenome 分析</a></li>
+            
+                <li class="third-level"><a href="#31">3.1 基因组组装</a></li>
+            
+                <li class="third-level"><a href="#32">3.2 基因组注释</a></li>
+            
+                <li class="third-level"><a href="#33-roary-phandango">3.3 Roary &amp; Phandango</a></li>
+            
+                <li class="third-level"><a href="#34-harvest">3.4 Harvest</a></li>
+            
+        
+            <li class="second-level"><a href="#3-snps">3. SNPs 构建进化树</a></li>
+            
+                <li class="third-level"><a href="#31-snippy-snps">3.1 用 Snippy 获得 snps</a></li>
+            
+                <li class="third-level"><a href="#32-raxml">3.2 用 RAxML 构建进化树</a></li>
+            
+                <li class="third-level"><a href="#33-figtree">3.3 用 Figtree 绘制进化树</a></li>
+            
+        
+            <li class="second-level"><a href="#4">4. 基因组组装</a></li>
+            
+        
+            <li class="second-level"><a href="#5-pangenome">5. Pangenome 分析</a></li>
+            
+        
+            <li class="second-level"><a href="#_2">相关软件安装</a></li>
+            
+        
+            <li class="second-level"><a href="#reference">Reference</a></li>
+            
+        
+    
+    </ul>
+</div></div>
+        <div class="col-md-9" role="main">
+
+<h1 id="snps">炭疽芽胞杆菌基因组 SNPs 分析</h1>
 <p>G20备战期间，单位要加强生物恐怖事件的防控能力。最著名的细菌性生物恐怖战剂就是含有炭疽芽胞杆菌的白色粉末。由于日常工作中无法接触到这些病原，因此在经验和技能方面都只能处于理论状态（即使实战一般也是由军科院等机构出面）。但是为了能力建设，应对万一发生的疑似事件，在基因组数据分析的技术方面还是可以做好准备。构建相应的分析流程，在获得菌株基因组数据后可以第一时间就进行溯源方面的研究。从而在这准备工作的过程中形成了此文档。主要目的也是为了抛砖引玉，做到举一反三，给其他细菌性病原微生物基因组溯源分析时提供参考。</p>
 <p>软件中使用的一些参数是根据自己的服务器设置的，具体运行时需要根据计算机配置进行相应的调整。我们服务器的配置如下：</p>
 <ul>
@@ -189,19 +222,43 @@ $ cat result.txt | sort -n -k3
 <h3 id="22">2.2 去除接头</h3>
 <p>其次要去除接头的污染。因为分析流程中不仅包括 mapping 的方式，还包含 de novo assembly，为了避免接头序列对基因组拼接的影响，这里最好进行。这里使用的工具是 <code>FastQC</code> 和 <code>fadapa</code></p>
 <pre><code class="bash"># 使用脚本 scan_adaptors.py 来扫描下载的高通量基因组测序数据是否有接头污染的情况。
-$ fastqc -t 40 -d qc -q --extract *.fastq.gz
+$ fastqc -t 40 -q --extract *.fastq.gz
 $ python scan_fastqc_report.py -d qc
 </code></pre>
 
 <pre><code class="python">#!usr/bin/env python
 # -*- coding: utf-8 -*-
 # scripts name: scan_fastqc_report.py
+import os
+from Bio.Seq import Seq
+from Bio import SeqIO
+from Bio.SeqRecord import SeqRecord
+from Bio.Alphabet import generic_nucleotide
 from fadapa import Fadapa
 import argparse
 
 parser = argparse.ArgumentParser()
-parser.add_argument()
+parser.add_argument('-i', '--input', action='store', dest='qcfile', type=str, help=&quot;fastqc extract data file&quot;)
+parser.add_argument('-o', '--output', action='store', dest='adaptor', type=str, help=&quot;adaptors file&quot;)
+args = parser.parse_args()
+qc_file = Fadapa(args.qcfile)
 
+if qc_file.summary()[-3][0] == 'fail':
+    adaptors = []
+    ors = qc_file.clean_data(&quot;Overrepresented sequences&quot;)
+    ors.pop(0)
+
+    for (index, seq) in enumerate(ors):
+        if 'NNNNNN' in seq[0]:
+            continue
+        adaptors.append(SeqRecord(Seq(seq[0], generic_nucleotide), id=&quot;adaptor_%d&quot; % (index+1)))
+
+    if not os.path.exists(args.adaptor):
+        os.makedirs(args.adaptor)
+    SeqIO.write(adaptors, &quot;%s/adaptor.fasta&quot; % args.adaptor, &quot;fasta&quot;)
+    print &quot;Overrepresented sequences has been save to adaptors.fasta&quot;
+else:
+    print &quot;No Overrepresented sequences&quot;
 </code></pre>
 
 <h2 id="3-pangenome">3. Pangenome 分析</h2>
@@ -300,46 +357,53 @@ $ sudo ln -s `pwd`/raxmlHPC-PTHREADS-SSE3 /usr/local/raxml
 <li>parallel tutorial: https://www.biostars.org/p/63816/</li>
 <li>gnuplot tutorial: http://lzz5235.github.io/2016/01/12/gnuplot.html</li>
 <li>gplot usage: https://github.com/RhysU/gplot/blob/master/README.md</li>
-</ol>
-              
-            </div>
-          </div>
-          <footer>
-  
-    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-      
-      
-        <a href=".." class="btn btn-neutral" title="Home"><span class="icon icon-circle-arrow-left"></span> Previous</a>
-      
+</ol></div>
+        
     </div>
-  
 
-  <hr/>
+    <footer class="col-md-12 text-center">
+        <hr>
+        <p>
+        <small>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a>.</p></small>
+    </footer>
 
-  <div role="contentinfo">
-    <!-- Copyright etc -->
-    
-  </div>
+    <script src="../js/jquery-1.10.2.min.js"></script>
+    <script src="../js/bootstrap-3.0.3.min.js"></script>
+    <script src="../js/highlight.pack.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+    <script>
+    var base_url = '..';
+    </script>
+    <script data-main="../mkdocs/js/search.js" src="../mkdocs/js/require.js"></script>
+    <script src="../js/base.js"></script>
 
-  Built with <a href="http://www.mkdocs.org">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
-</footer>
-	  
+    <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="Search Modal" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">
+                        <span aria-hidden="true">&times;</span>
+                        <span class="sr-only">Close</span>
+                    </button>
+                    <h4 class="modal-title" id="exampleModalLabel">Search</h4>
+                </div>
+                <div class="modal-body">
+                    <p>
+                        From here you can search these documents. Enter your search terms below.
+                    </p>
+                    <form role="form">
+                        <div class="form-group">
+                            <input type="text" class="form-control" placeholder="Search..." id="mkdocs-search-query">
+                        </div>
+                    </form>
+                    <div id="mkdocs-search-results"></div>
+                </div>
+                <div class="modal-footer">
+                </div>
+            </div>
         </div>
-      </div>
+    </div>
 
-    </section>
+    </body>
 
-  </div>
-
-<div class="rst-versions" role="note" style="cursor: pointer">
-    <span class="rst-current-version" data-toggle="rst-current-version">
-      
-      
-        <span><a href=".." style="color: #fcfcfc;">&laquo; Previous</a></span>
-      
-      
-    </span>
-</div>
-
-</body>
 </html>
