@@ -8,3 +8,4 @@
    get_data
    practice
    introduce_lab
+   edirect
